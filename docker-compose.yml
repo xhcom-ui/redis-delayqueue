@@ -1,0 +1,28 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: redis-delayqueue-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123456
+      MYSQL_DATABASE: redis_delayqueue
+      TZ: Asia/Shanghai
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+
+  redis:
+    image: redis:7.2
+    container_name: redis-delayqueue-redis
+    ports:
+      - "6380:6379"
+    command: redis-server --appendonly yes --notify-keyspace-events Ex
+    volumes:
+      - redis-data:/data
+
+volumes:
+  mysql-data:
+  redis-data:

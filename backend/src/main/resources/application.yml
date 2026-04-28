@@ -1,0 +1,39 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: redis-delayqueue
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      database: ${REDIS_DATABASE:0}
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/redis_delayqueue?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true}
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:12345678}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 2
+      maximum-pool-size: 10
+      connection-timeout: 30000
+  sql:
+    init:
+      mode: ${SQL_INIT_MODE:always}
+      schema-locations: classpath:schema.sql
+
+mybatis:
+  type-aliases-package: com.openclaw.delayqueue.model
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+delay-queue:
+  instance-id: ${INSTANCE_ID:${spring.application.name}-${server.port}}
+  sse-channel: delay:queue:sse:events
+  http-timeout-seconds: ${HTTP_TIMEOUT_SECONDS:10}
+
+logging:
+  level:
+    com.openclaw.delayqueue.mapper: debug
