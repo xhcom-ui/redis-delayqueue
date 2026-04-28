@@ -3,6 +3,7 @@
 基于 Spring Boot 3、Redis、Redisson、MySQL、MyBatis、Vue 3、Vite 和 Ant Design Vue 的延时队列管理系统。
 
 系统支持三种 Redis 延时队列方案，延迟到期后调用外部接口，再执行回调接口，并把执行记录写入 MySQL。前端通过 SSE 实时接收执行日志，适合演示和验证多实例部署下“只消费一次、只推送一次”的链路。
+<img width="1414" height="1176" alt="f1134bee11225ab565519e6789dc66e0" src="https://github.com/user-attachments/assets/8862af5d-cb1e-440e-8056-6c859e786cc9" />
 
 ## 功能
 
